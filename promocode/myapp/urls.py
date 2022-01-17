@@ -8,5 +8,7 @@ urlpatterns = [
     # get coupon or order_amount'''
 
     path('get_code', views.get_code, name='get_code'),
-    path('add_coupon_order', views.add_coupon_order, name='add_coupon_order')
+    path('add_coupon_order', views.add_coupon_order, name='add_coupon_order'),
+    path('edit_coupon/<int:id>', views.edit_coupon, name='edit_coupon'),
+    path('delcoupon/<int:id>', views.delcoupon, name='delcoupon')
 ]

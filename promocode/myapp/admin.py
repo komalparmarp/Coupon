@@ -8,20 +8,18 @@ from django.contrib.auth.admin import UserAdmin
 
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ['username','date_of_birth','gender','email']
-    # list_display = ["user", "coupon", "order_amount", "total_amount", 'email', 'gender', 'date_of_birth', 'used', ]
-    # search_fields = ["user__username"]
-
-    # list_display = (
-    #     'username', 'email', 'gender', 'date_of_birth', 'used',
-    # )
+    list_display = ['username', 'date_of_birth', 'gender', 'email', ]
+    search_fields = ["user__username"]
 
 
-admin.site.register(Userprofile,CustomUserAdmin)
+# list_display = (
+#     'username', 'email', 'gender', 'date_of_birth', 'used',
+# )
+
+
+admin.site.register(Userprofile)
 admin.site.register(Coupon)
 admin.site.register(Order)
-
-
 
 # admin.site.register(Userprofile, UserAdmin)
 # admin.site.register(Coupon)
@@ -91,9 +89,9 @@ admin.site.register(Order)
 #
 # class CouponRedemptionAdmin(admin.ModelAdmin):
 #     """Admin Interface for Coupon model."""
-    #
-    # list_display = ["user", "coupon", "order_amount", "actual_price"]
-    # search_fields = ["user__username"]
+#
+# list_display = ["user", "coupon", "order_amount", "actual_price"]
+# search_fields = ["user__username"]
 
 # admin.site.register(Coupon, CouponAdmin)
 # # admin.site.register(CouponRedemption, CouponRedemptionAdmin)

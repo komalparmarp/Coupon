@@ -47,7 +47,7 @@ class Coupon(models.Model):
         ],
     )
 
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
+    # gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
 
     start_date = models.DateTimeField(validators=[validate_start], null=True, blank=True)
     expiration_date = models.DateTimeField(validators=[validate_date], null=True, blank=True)
@@ -58,6 +58,7 @@ class Coupon(models.Model):
     )
 
     per_user_limit = models.PositiveIntegerField()
+    textfile=models.CharField(max_length=10,blank=True)
 
     # is_active = models.BooleanField(default=True)
 
@@ -70,12 +71,12 @@ class Coupon(models.Model):
         """Get the human readable value from an enumerable list of key-value pairs."""
         return dict(enumerables)[enum_value]
 
-    @property
-    def display_gender(self):
-        """
-        return coupon gender
-        """
-        return self.__enumerable_to_display(GENDER_CHOICES, self.gender)
+    # @property
+    # def display_gender(self):
+    #     """
+    #     return coupon gender
+    #     """
+    #     return self.__enumerable_to_display(GENDER_CHOICES, self.gender)
 
 
 class Userprofile(AbstractUser):
@@ -87,13 +88,20 @@ class Userprofile(AbstractUser):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user_related')
-    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE,related_name='coupon_related')
-    order_amount = models.PositiveIntegerField()
-        # validators=[MinValueValidator(100),MaxValueValidator(150000)])
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_related')
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, related_name='coupon_related')
+    order_amount = models.IntegerField(validators=[MinValueValidator(100), MaxValueValidator(150000)])
     total_amount = models.PositiveIntegerField(
         # help_text="Order total amount after code redemption applied."
     )
 
     def __str__(self):
         return "{} - {}".format(self.user.username, self.coupon.code)
+
+    @property
+    def discount_amout(self):
+        """
+        return coupon gender
+        """
+
+        return self.order_amount - self.total_amount
